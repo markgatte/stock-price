@@ -1,0 +1,27 @@
+extends ../views/layout
+    
+block content
+    h1= title
+    h2= 'Get single price and total likes'
+    form(action="/api/stock-prices" method='POST')
+        input(type='text' placeholder='GOOG' id='stock' name='stock')
+        input(type='checkbox')
+        label like
+        button(type='Submit') Get Price!
+    h2= 'Compare and get relative likes'
+    form(action="/api/stock-prices/stocks" method='POST')
+        input(type='text' placeholder='GOOG' id='stock1' name='stock1')
+        input(type='text' placeholder='MSFT' id='stock2' name='stock2')
+        input(type='checkbox')
+        label like both?
+        button(type='Submit') Get Price!
+
+    if getPrice
+        p.mt-5= getPrice
+    if combine
+        - var values = combine;
+        ul
+            each val in values
+                li= val.symbol + ', $ ' + val.price
+            else
+                li There are no values
